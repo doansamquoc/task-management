@@ -5,10 +5,13 @@ import com.sam.taskmanagement.dto.response.TaskResponse;
 import com.sam.taskmanagement.entity.Task;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.ReportingPolicy;
 
 @Mapper(
     componentModel = "spring",
-    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+    unmappedSourcePolicy = ReportingPolicy.IGNORE,
+    unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
 public interface TaskMapper {
     Task toEntity(TaskCreationRequest request);
