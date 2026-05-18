@@ -9,7 +9,7 @@ import java.util.List;
 public record ErrorResponse(
 	int code,
 	String message,
-	List<FieldViolation> violations,
+	List<FieldViolation> errors,
 	String path,
 	LocalDateTime timestamp,
 	String trace
