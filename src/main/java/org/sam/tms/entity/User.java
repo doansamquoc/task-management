@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.sam.tms.enums.Gender;
+import org.sam.tms.enums.Role;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -39,6 +40,11 @@ public class User extends BaseEntity {
 
 	@Column(name = "avatar")
 	String avatar;
+
+	@Builder.Default
+	@Column(name = "role")
+	@Enumerated(EnumType.STRING)
+	Role role = Role.USER;
 
 	@OneToMany(
 		mappedBy = "assignor", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true
