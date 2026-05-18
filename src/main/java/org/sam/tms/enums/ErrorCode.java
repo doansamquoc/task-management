@@ -10,7 +10,14 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public enum ErrorCode {
-	SERVER_INTERNAL(5000, HttpStatus.INTERNAL_SERVER_ERROR, "server.internal");
+	SERVER_INTERNAL(5000, HttpStatus.INTERNAL_SERVER_ERROR, "server.internal"),
+
+	// Assignee
+	ASSIGNEE_NOT_FOUND(4000, HttpStatus.NOT_FOUND, "assignee.not_found"),
+
+	NO_RESOURCE_FOUND(4400, HttpStatus.NOT_FOUND, "resource.not_found")
+	// More...
+	;
 
 	int code;
 	HttpStatus status;

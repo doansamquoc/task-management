@@ -10,6 +10,7 @@ import org.sam.tms.i18n.MessageTranslator;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
 
@@ -30,9 +31,24 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(errorCode.getStatus()).body(response);
 	}
 
+	@ExceptionHandler(NoResourceFoundException.class)
+	ResponseEntity<ErrorResponse> handleNoResourceFound(NoResourceFoundException e, HttpServletRequest request) {
+		log.error("CATCH {}: {}", e.getClass(), e.getMessage());
+		
+		ErrorCode errorCode = ErrorCode.NO_RESOURCE_FOUND;
+		String message = translator.of(errorCode.getKey());
+		ErrorResponse response = new ErrorResponse(
+			errorCode.getCode(),
+			message,
+			request.getRequestURI(),
+			e.getMessage()
+		);
+		return ResponseEntity.status(errorCode.getStatus()).body(response);
+	}
+
 	@ExceptionHandler(Exception.class)
 	ResponseEntity<ErrorResponse> handleGeneric(Exception e, HttpServletRequest request) {
-		log.info("Exception Class: {}", e.getClass());
+		log.info("CATCH {}", e.getClass());
 
 		ErrorCode errorCode = ErrorCode.SERVER_INTERNAL;
 		String message = translator.of(errorCode.getKey());
