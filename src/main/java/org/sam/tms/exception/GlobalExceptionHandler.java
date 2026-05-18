@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
 	private List<FieldViolation> violationsTranslate(List<FieldViolation> violations) {
 		if (violations == null || violations.isEmpty()) return List.of();
 		return violations.stream().map(v -> {
-			String message = translator.of(v.message());
+			String message = translator.of(v.message(), v.args());
 			return new FieldViolation(v.field(), message, v.rejectedValue(), v.args());
 		}).toList();
 	}
